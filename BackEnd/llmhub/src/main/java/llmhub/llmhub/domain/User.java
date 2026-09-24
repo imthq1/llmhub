@@ -3,6 +3,9 @@ package llmhub.llmhub.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import llmhub.llmhub.util.Enum.AuthProvider;
+import llmhub.llmhub.util.Enum.Enable;
+import llmhub.llmhub.util.SecurityUtil;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -36,10 +39,6 @@ public class User {
     private Enable enable;
     @Enumerated(EnumType.STRING)
     private AuthProvider authProvider;
-    @Enumerated(EnumType.STRING)
-    private Education education;
-//    @Enumerated(EnumType.STRING)
-//    private AuthProvider provider;
 
     private String providerId;
 
@@ -47,30 +46,6 @@ public class User {
     private String image_url;
 
     private String address;
-
-    @ManyToOne
-    @JoinColumn(name = "role_id")
-    private Role role;
-
-    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnore
-    private List<ProgressSection> progressSections;
-
-    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnore
-    private List<ProgressLesson> progressLessons;
-
-    @OneToMany(mappedBy = "nguoiDung",cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnore
-    private List<HistoryLearn> historyLearns;
-
-    @OneToMany(mappedBy = "nguoiDung",cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnore
-    private List<TienDo> tienDoList;
-
-    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnore
-    private List<HistoryTestExercise> historyTestExercises;
 
     @PrePersist
     public void BeforeCreate() {

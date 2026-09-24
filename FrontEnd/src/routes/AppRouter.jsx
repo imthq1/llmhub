@@ -1,7 +1,22 @@
+import { useEffect } from 'react'
 import HomePage from '../pages/HomePage'
+import LoginPage from '../pages/LoginPage'
+import GoogleLoginPage from '../pages/GoogleLoginPage'
+
+function LoginRoute() {
+  const isLoggedIn = Boolean(localStorage.getItem('access_token'))
+
+  useEffect(() => {
+    if (isLoggedIn) window.location.replace('/')
+  }, [isLoggedIn])
+
+  return isLoggedIn ? <HomePage /> : <LoginPage />
+}
 
 function AppRouter() {
-  // Thay router tại đây khi dự án có nhiều route (ví dụ: React Router).
+  const path = window.location.pathname.replace(/\/$/, '') || '/'
+  if (path === '/login/google') return <GoogleLoginPage />
+  if (path === '/login') return <LoginRoute />
   return <HomePage />
 }
 
